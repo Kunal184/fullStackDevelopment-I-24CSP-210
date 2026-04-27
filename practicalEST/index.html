@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Post Form</title>
+</head>
+<body>
+  <form id="postForm">
+    <input name="title" placeholder="Title" required><br><br>
+    <textarea name="body" placeholder="Body" required></textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    postForm.onsubmit = async e => {
+      e.preventDefault();
+      let data = {
+        title: postForm.title.value,
+        body: postForm.body.value
+      };
+      let res = await fetch('/posts', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+      message.textContent = res.ok ? "Success!" : "Error submitting.";
+    };
+  </script>
+</body>
+</html>
